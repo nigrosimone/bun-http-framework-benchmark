@@ -5,6 +5,9 @@ const { extraRoutes } = require('../extra-routes.mjs')
 const app = fulmine()
 app.set("etag", false)
 app.set("x-powered-by", false)
+// a route whose handler only copies params and query into the response is answered by uWS
+// itself, so /id/:id is served like / is, without entering JavaScript
+app.set("declarative request values", true)
 
 for (const route of extraRoutes) {
 	app.get(route, (_req, res) => res.send('ok'))
